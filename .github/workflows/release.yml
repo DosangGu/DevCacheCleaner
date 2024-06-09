@@ -1,0 +1,49 @@
+name: "Publish new release to nuget.org"
+
+on:
+  release:
+    types:
+      - published
+
+permissions:
+  contents: read
+
+env:
+  DOTNET_NOLOGO: true # Disable the .NET logo
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true # Disable the .NET first time experience
+  DOTNET_CLI_TELEMETRY_OPTOUT: true # Disable sending .NET CLI telemetry
+  PROJECT_TO_DEPLOY: "src/DevCacheCleaner/DevCacheCleaner.csproj"
+
+jobs:
+  build-check-on-windows:
+    name: "Check build on Windows"
+    runs-on: windows-latest
+    steps:
+      - name: CheckOut
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
+      - name: Restore
+        run: dotnet restore ${{ env.PROJECT_TO_DEPLOY }}
+      - name: Build
+        run: dotnet build ${{ env.PROJECT_TO_DEPLOY }} -c Release
+
+  deloy-to-nuget:
+    name: "Deploy to NuGet"
+    runs-on: windows-latest
+    environment: Nuget
+    needs:
+      - build-check-on-windows
+    steps:
+      - name: CheckOut
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
+      - name: Restore
+        run: dotnet restore ${{ env.PROJECT_TO_DEPLOY }}
+      - name: Build
+        run: dotnet build ${{ env.PROJECT_TO_DEPLOY }} -c Release --no-restore
+      - name: Pack
+        run: dotnet pack ${{ env.PROJECT_TO_DEPLOY }} -c Release --no-build -o ./nupkg
+      - name: Publish
+        run: dotnet nuget push ${{ env.PROJECT_TO_DEPLOY }} --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
