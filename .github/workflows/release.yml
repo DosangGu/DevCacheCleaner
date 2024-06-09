@@ -12,12 +12,12 @@ env:
   DOTNET_NOLOGO: true # Disable the .NET logo
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true # Disable the .NET first time experience
   DOTNET_CLI_TELEMETRY_OPTOUT: true # Disable sending .NET CLI telemetry
-  PROJECT_TO_DEPLOY: "src/DevCacheCleaner/DevCacheCleaner.csproj"
-  TOOL_NAME: "DevCacheCleaner"
+  PROJECT_TO_DEPLOY: src/DevCacheCleaner/DevCacheCleaner.csproj
+  TOOL_NAME: DevCacheCleaner
 
 jobs:
   build-check-on-windows:
-    name: "Check build on Windows"
+    name: Check build on Windows
     runs-on: windows-latest
     steps:
       - name: CheckOut
@@ -30,7 +30,7 @@ jobs:
         run: dotnet build ${{ env.PROJECT_TO_DEPLOY }} -c Release
 
   deloy-to-nuget:
-    name: "Deploy to NuGet"
+    name: Deploy to NuGet
     runs-on: windows-latest
     environment: Nuget
     needs:
@@ -45,6 +45,8 @@ jobs:
       - name: Build
         run: dotnet build ${{ env.PROJECT_TO_DEPLOY }} -c Release --no-restore
       - name: Pack
-        run: dotnet pack ${{ env.PROJECT_TO_DEPLOY }} -c Release --no-build -o ./nupkg
+        run: dotnet pack ${{ env.PROJECT_TO_DEPLOY }} -c Release --output ./nupkg --no-build
       - name: Publish
-        run: dotnet nuget push ./nupkg/${{ env.TOOL_NAME }} --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
+        run: |
+          $PACKAGE_FILE = Get-ChildItem -Path .\nupkg\*.nupkg | Select-Object -First 1
+          dotnet nuget push "$PACKAGE_FILE" -k ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
