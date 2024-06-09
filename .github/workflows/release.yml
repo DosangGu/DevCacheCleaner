@@ -13,6 +13,7 @@ env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true # Disable the .NET first time experience
   DOTNET_CLI_TELEMETRY_OPTOUT: true # Disable sending .NET CLI telemetry
   PROJECT_TO_DEPLOY: "src/DevCacheCleaner/DevCacheCleaner.csproj"
+  TOOL_NAME: "DevCacheCleaner"
 
 jobs:
   build-check-on-windows:
@@ -46,4 +47,4 @@ jobs:
       - name: Pack
         run: dotnet pack ${{ env.PROJECT_TO_DEPLOY }} -c Release --no-build -o ./nupkg
       - name: Publish
-        run: dotnet nuget push ${{ env.PROJECT_TO_DEPLOY }} --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
+        run: dotnet nuget push ./nupkg/${{ env.TOOL_NAME }} --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
