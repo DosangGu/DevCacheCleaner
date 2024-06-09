@@ -2,7 +2,7 @@
 
 internal static class NugetPathFinder
 {
-    public static string GetNugetPackagesPath()
+    public static string GetNugetPackagesPath(string? overridedNugetPackagesPath = default)
     {
         string? customNugetPath = Environment.GetEnvironmentVariable("NUGET_PACKAGES");
         if (customNugetPath is not null)
