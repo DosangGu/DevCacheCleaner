@@ -10,6 +10,9 @@
     <Version>0.0.1</Version>
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>DevCacheCleaner</ToolCommandName>
+
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/DosangGu/DevCacheCleaner</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
