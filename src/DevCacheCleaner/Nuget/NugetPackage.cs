@@ -1,4 +1,4 @@
-﻿namespace DevCacheCleaner;
+﻿namespace DevCacheCleaner.Nuget;
 
 internal class NugetPackage
 {
