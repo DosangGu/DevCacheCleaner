@@ -16,25 +16,10 @@ env:
   TOOL_NAME: DevCacheCleaner
 
 jobs:
-  build-check-on-windows:
-    name: Check build on Windows
-    runs-on: windows-latest
-    steps:
-      - name: CheckOut
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.release.tag_name }}
-      - name: Restore
-        run: dotnet restore ${{ env.PROJECT_TO_DEPLOY }}
-      - name: Build
-        run: dotnet build ${{ env.PROJECT_TO_DEPLOY }} -c Release
-
   deloy-to-nuget:
     name: Deploy to NuGet
     runs-on: windows-latest
     environment: Nuget
-    needs:
-      - build-check-on-windows
     steps:
       - name: CheckOut
         uses: actions/checkout@v4
