@@ -12,7 +12,8 @@ internal class Program
         var nugetCacheManager = new NugetCacheManager(programOptions.NugetPackagesPath);
         var recaimedSpacesOfNugetInBytes = nugetCacheManager.CleanCache(programOptions.ThresholdDays);
 
-        Console.WriteLine($"Reclaimed spaces of nuget packages: {recaimedSpacesOfNugetInBytes} bytes");
+        float reclaimedSpacesOfNugetInMB = recaimedSpacesOfNugetInBytes / 1024 / 1024;
+        Console.WriteLine($"Reclaimed spaces of nuget packages: {reclaimedSpacesOfNugetInMB:F2} MB");
     }
 }
 
