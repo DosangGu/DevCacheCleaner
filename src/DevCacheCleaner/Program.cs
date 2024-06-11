@@ -9,23 +9,10 @@ internal class Program
     {
         var programOptions = Parser.Default.ParseArguments<Options>(args).Value;
 
-        string nugetPackagesPath = NugetPathFinder.GetNugetPackagesPath(programOptions.NugetPackagesPath);
+        var nugetCacheManager = new NugetCacheManager(programOptions.NugetPackagesPath);
+        var recaimedSpacesOfNugetInBytes = nugetCacheManager.CleanCache(programOptions.ThresholdDays);
 
-        List<NugetPackage> nugetPackages = Directory.GetDirectories(nugetPackagesPath)
-            .Select(p =>
-            {
-                var package = new NugetPackage(p);
-                package.LoadCachedVersions();
-                return package;
-            })
-            .ToList();
-
-        nugetPackages
-            .ForEach(p =>
-            {
-                p.DeleteOldAccessedCaches(TimeSpan.FromDays(programOptions.ThresholdDays));
-                p.DeleteSelfIfEmpty();
-            });
+        Console.WriteLine($"Reclaimed spaces of nuget packages: {recaimedSpacesOfNugetInBytes} bytes");
     }
 }
 

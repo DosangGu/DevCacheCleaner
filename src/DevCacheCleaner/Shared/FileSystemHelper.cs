@@ -19,4 +19,26 @@ internal static class FileSystemHelper
         }
         return false;
     }
+
+    public static long GetDirectorySize(string directoryPath)
+    {
+        long size = 0;
+
+        DirectoryInfo directoryInfo = new DirectoryInfo(directoryPath);
+        FileInfo[] files = directoryInfo.GetFiles();
+
+        foreach (FileInfo file in files)
+        {
+            size += file.Length;
+        }
+
+        DirectoryInfo[] directories = directoryInfo.GetDirectories();
+
+        foreach (DirectoryInfo directory in directories)
+        {
+            size += GetDirectorySize(directory.FullName);
+        }
+
+        return size;
+    }
 }
