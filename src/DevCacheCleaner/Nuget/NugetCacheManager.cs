@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
-using DevCacheCleaner.Shared;
+﻿using DevCacheCleaner.Shared;
 
 namespace DevCacheCleaner.Nuget;
 
@@ -41,10 +35,10 @@ internal class NugetCacheManager
 
         nugetPackages
             .ForEach(p =>
-            {
-                p.DeleteOldAccessedCaches(TimeSpan.FromDays(thresholdDays));
-                p.DeleteSelfIfEmpty();
-            });
+                {
+                    p.DeleteOldAccessedCaches(TimeSpan.FromDays(thresholdDays));
+                    p.DeleteSelfIfEmpty();
+                });
 
         var postVolume = FileSystemHelper.GetDirectorySize(this.NugetPackagesPath);
 
