@@ -10,12 +10,14 @@
     <Version>0.0.2</Version>
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>DevCacheCleaner</ToolCommandName>
-
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/DosangGu/DevCacheCleaner</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\"/>  
+  
     <PackageReference Include="CommandLineParser" Version="2.9.1" />
   </ItemGroup>
 
