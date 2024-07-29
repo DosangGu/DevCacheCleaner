@@ -15,7 +15,7 @@ internal class Program
         var reclaimedSpacesOfNuget = nugetCacheManager.CleanCache(programOptions.ThresholdDays);
 
         float reclaimedSpacesOfNugetInMB = reclaimedSpacesOfNuget / 1024 / 1024;
-        Console.WriteLine($"Reclaimed spaces of nuget packages: {reclaimedSpacesOfNugetInMB:F2} MB");
+        Console.WriteLine($"Reclaimed spaces: {reclaimedSpacesOfNugetInMB:F2} MB");
     }
 }
 
