@@ -12,7 +12,7 @@ internal class NugetPackageVersion
 
     public string DirectoryPath { get; }
 
-    public DateTime LastUsed => this._directoryInfo.LastAccessTime;
+    public DateTime LastUsedAt { get; }
 
     public NugetPackageVersion(NugetPackage nugetPackage, string version)
     {
@@ -20,6 +20,7 @@ internal class NugetPackageVersion
         this.Version = version;
         this.DirectoryPath = Path.Combine(this.NugetPackage.DirectoryPath, this.Version);
         this._directoryInfo = new DirectoryInfo(this.DirectoryPath);
+        this.LastUsedAt = FileSystemHelper.GetLastAccessedTimeOfDirectory(this._directoryInfo);
     }
 
     public bool IsInUsedByOtherProcess()

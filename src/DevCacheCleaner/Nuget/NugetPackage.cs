@@ -35,7 +35,7 @@ internal class NugetPackage
 
     public void DeleteOldAccessedCaches(TimeSpan threshold)
     {
-        var oldCaches = this.CachedVersions.Where(v => DateTime.Now - v.LastUsed > threshold);
+        var oldCaches = this.CachedVersions.Where(v => DateTime.Now - v.LastUsedAt > threshold);
 
         foreach (var cache in oldCaches)
         {

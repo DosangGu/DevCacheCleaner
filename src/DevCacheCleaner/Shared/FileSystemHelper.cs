@@ -41,4 +41,49 @@ internal static class FileSystemHelper
 
         return size;
     }
+
+    /// <summary>
+    /// Get last access time by querying the files of directory recursively.
+    /// </summary>
+    /// <param name="directoryPath"></param>
+    /// <returns></returns>
+    public static DateTime GetLastAccessedTimeOfDirectory(string directoryPath)
+    {
+        DirectoryInfo directoryInfo = new DirectoryInfo(directoryPath);
+
+        return GetLastAccessedTimeOfDirectory(directoryInfo);
+    }
+
+    /// <summary>
+    /// Get last access time by querying the files of directory recursively.
+    /// </summary>
+    /// <param name="directoryPath"></param>
+    /// <returns></returns>
+    public static DateTime GetLastAccessedTimeOfDirectory(DirectoryInfo directoryInfo)
+    {
+        DateTime lastAccessedTime = DateTime.MinValue;
+
+        FileInfo[] files = directoryInfo.GetFiles();
+        foreach (FileInfo file in files)
+        {
+            if (file.LastAccessTime > lastAccessedTime)
+            {
+                lastAccessedTime = file.LastAccessTime;
+            }
+        }
+
+        DirectoryInfo[] directories = directoryInfo.GetDirectories();
+
+        foreach (DirectoryInfo directory in directories)
+        {
+            DateTime lastAccessedTimeOfSubDirectory = GetLastAccessedTimeOfDirectory(directory.FullName);
+
+            if (lastAccessedTimeOfSubDirectory > lastAccessedTime)
+            {
+                lastAccessedTime = lastAccessedTimeOfSubDirectory;
+            }
+        }
+
+        return lastAccessedTime;
+    }
 }
