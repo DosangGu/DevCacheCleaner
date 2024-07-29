@@ -24,7 +24,4 @@ internal class Options
 {
     [Option('d', "days", Required = false, Default = 30, HelpText = "Threshold days to delete old accessed caches")]
     public int ThresholdDays { get; set; }
-
-    [Option("nuget-packages", Required = false, HelpText = "Nuget packages cache path to clean")]
-    public string? NugetPackagesPath { get; set; }
 }
