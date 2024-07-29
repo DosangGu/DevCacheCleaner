@@ -2,11 +2,11 @@
 
 namespace DevCacheCleaner.Nuget;
 
-internal class NugetPackageVersion
+internal class GlobalPackageVersion
 {
     private readonly DirectoryInfo _directoryInfo;
 
-    public NugetPackage NugetPackage { get; }
+    public GlobalPackage NugetPackage { get; }
 
     public string Version { get; }
 
@@ -14,7 +14,7 @@ internal class NugetPackageVersion
 
     public DateTime LastUsedAt { get; }
 
-    public NugetPackageVersion(NugetPackage nugetPackage, string version)
+    public GlobalPackageVersion(GlobalPackage nugetPackage, string version)
     {
         this.NugetPackage = nugetPackage;
         this.Version = version;

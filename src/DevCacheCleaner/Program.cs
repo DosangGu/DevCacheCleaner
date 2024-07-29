@@ -12,10 +12,10 @@ internal class Program
 
         var cachePathInfo = await CLIHelper.GetCachePathInfoAsync();
 
-        var nugetCacheManager = new GlobalCacheManager(cachePathInfo.GlobalCache);
-        var recaimedSpacesOfNugetInBytes = nugetCacheManager.CleanCache(programOptions.ThresholdDays);
+        var globalPackageManager = new GlobalPackageManager(cachePathInfo.GlobalCache);
+        var recaimedSpacesOfGlobalPackageInBytes = globalPackageManager.CleanCache(programOptions.ThresholdDays);
 
-        float reclaimedSpacesOfNugetInMB = recaimedSpacesOfNugetInBytes / 1024 / 1024;
+        float reclaimedSpacesOfNugetInMB = recaimedSpacesOfGlobalPackageInBytes / 1024 / 1024;
         Console.WriteLine($"Reclaimed spaces of nuget packages: {reclaimedSpacesOfNugetInMB:F2} MB");
     }
 }

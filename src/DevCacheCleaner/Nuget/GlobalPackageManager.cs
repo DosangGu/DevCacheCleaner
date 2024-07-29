@@ -2,17 +2,17 @@
 
 namespace DevCacheCleaner.Nuget;
 
-internal class GlobalCacheManager
+internal class GlobalPackageManager
 {
     public string GlobalCachePath { get; }
 
-    public GlobalCacheManager(string globalCachePath)
+    public GlobalPackageManager(string globalCachePath)
     {
         this.GlobalCachePath = globalCachePath;
     }
 
     /// <summary>
-    /// Clean nuget packages cache.
+    /// Clean global packages cache.
     /// </summary>
     /// <param name="thresholdDays">Threshold delete in days.</param>
     /// <returns>Recliamed spaces in bytes.</returns>
@@ -20,16 +20,16 @@ internal class GlobalCacheManager
     {
         var preVolume = FileSystemHelper.GetDirectorySize(this.GlobalCachePath);
 
-        List<NugetPackage> nugetPackages = Directory.GetDirectories(this.GlobalCachePath)
+        List<GlobalPackage> globalPackages = Directory.GetDirectories(this.GlobalCachePath)
             .Select(p =>
             {
-                var package = new NugetPackage(p);
+                var package = new GlobalPackage(p);
                 package.LoadCachedVersions();
                 return package;
             })
             .ToList();
 
-        nugetPackages
+        globalPackages
             .ForEach(p =>
                 {
                     p.DeleteOldAccessedCaches(TimeSpan.FromDays(thresholdDays));

@@ -1,15 +1,15 @@
 ﻿namespace DevCacheCleaner.Nuget;
 
-internal class NugetPackage
+internal class GlobalPackage
 {
     public string DirectoryPath { get; }
 
-    public IList<NugetPackageVersion> CachedVersions { get; }
+    public IList<GlobalPackageVersion> CachedVersions { get; }
 
     private bool CanDeleteSelf
         => Directory.GetFiles(this.DirectoryPath).Length + Directory.GetDirectories(this.DirectoryPath).Length == 0;
 
-    public NugetPackage(string path, string? name = default)
+    public GlobalPackage(string path, string? name = default)
     {
         this.DirectoryPath = path;
         this.CachedVersions = [];
@@ -24,7 +24,7 @@ internal class NugetPackage
             .Select(q =>
             {
                 var directoryInfo = new DirectoryInfo(q);
-                return new NugetPackageVersion(this, directoryInfo.Name);
+                return new GlobalPackageVersion(this, directoryInfo.Name);
             });
 
         foreach (var version in versions)
