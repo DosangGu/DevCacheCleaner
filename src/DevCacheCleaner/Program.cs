@@ -1,5 +1,6 @@
 ﻿using CommandLine;
 using DevCacheCleaner.Nuget.GlobalPackage;
+using DevCacheCleaner.Nuget.HttpCache;
 using DevCacheCleaner.Shared;
 
 namespace DevCacheCleaner;
@@ -15,7 +16,12 @@ internal class Program
         var globalPackageManager = new GlobalPackageManager(cachePathInfo.GlobalCache);
         var recaimedSpacesOfGlobalPackageInBytes = globalPackageManager.CleanCache(programOptions.ThresholdDays);
 
-        float reclaimedSpacesOfNugetInMB = recaimedSpacesOfGlobalPackageInBytes / 1024 / 1024;
+        var httpCacheManager = new HttpCacheManager(cachePathInfo.HttpCache);
+        var recaimedSpacesOfHttpCacheInBytes = httpCacheManager.CleanCache();
+
+        var reclaimedSpacesOfNuget = recaimedSpacesOfGlobalPackageInBytes + recaimedSpacesOfHttpCacheInBytes;
+
+        float reclaimedSpacesOfNugetInMB = reclaimedSpacesOfNuget / 1024 / 1024;
         Console.WriteLine($"Reclaimed spaces of nuget packages: {reclaimedSpacesOfNugetInMB:F2} MB");
     }
 }

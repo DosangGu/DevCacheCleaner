@@ -1,4 +1,4 @@
-﻿namespace DevCacheCleaner.Shared;
+﻿namespace DevCacheCleaner.Nuget;
 
 public class CachePathInfo
 {
