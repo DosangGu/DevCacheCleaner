@@ -15,14 +15,19 @@ internal class HttpCacheManager
     {
         var preVolume = FileSystemHelper.GetDirectorySize(this.HttpCachePath);
 
-        var caches = Directory.GetFiles(this.HttpCachePath, "*.dat", SearchOption.AllDirectories);
-
+        var caches = Directory.GetFiles(this.HttpCachePath, "*.dat*", SearchOption.AllDirectories);
         var expiredCaches = caches
             .Select(q => new FileInfo(q))
             .Where(q => q.LastAccessTime < DateTime.Now.AddMinutes(-30))
             .ToList();
-
         expiredCaches.ForEach(q => q.Delete());
+
+        var directories = Directory.GetDirectories(this.HttpCachePath);
+        var emptyDirectories = directories
+            .Select(q => new DirectoryInfo(q))
+            .Where(q => q.GetFiles().Length == 0)
+            .ToList();
+        emptyDirectories.ForEach(q => q.Delete());
 
         var postVolume = FileSystemHelper.GetDirectorySize(this.HttpCachePath);
 

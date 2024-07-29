@@ -25,9 +25,11 @@ public static class CLIHelper
 
         var result = await resultTask;
 
-        var httpCachePath = result.Split('\n').First(p => p.Contains("http-cache")).Split(':').Last().Trim();
-        var globalCachePath = result.Split('\n').First(p => p.Contains("global-packages")).Split(':').Last().Trim();
-        var tempPath = result.Split('\n').First(p => p.Contains("temp")).Split(':').Last().Trim();
+        var paths = result.Split('\n');
+
+        var httpCachePath = paths.First(p => p.Contains("http-cache")).Split(": ").Last().Trim();
+        var globalCachePath = paths.First(p => p.Contains("global-packages")).Split(": ").Last().Trim();
+        var tempPath = paths.First(p => p.Contains("temp")).Split(": ").Last().Trim();
 
         return new CachePathInfo(httpCachePath, globalCachePath, tempPath);
     }
