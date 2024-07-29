@@ -1,6 +1,6 @@
-﻿namespace DevCacheCleaner.Nuget;
+﻿namespace DevCacheCleaner.Nuget.GlobalPackage;
 
-internal class GlobalPackage
+internal class GlobalPackageBundle
 {
     public string DirectoryPath { get; }
 
@@ -9,7 +9,7 @@ internal class GlobalPackage
     private bool CanDeleteSelf
         => Directory.GetFiles(this.DirectoryPath).Length + Directory.GetDirectories(this.DirectoryPath).Length == 0;
 
-    public GlobalPackage(string path, string? name = default)
+    public GlobalPackageBundle(string path, string? name = default)
     {
         this.DirectoryPath = path;
         this.CachedVersions = [];

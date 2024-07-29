@@ -1,12 +1,12 @@
 ﻿using DevCacheCleaner.Shared;
 
-namespace DevCacheCleaner.Nuget;
+namespace DevCacheCleaner.Nuget.GlobalPackage;
 
 internal class GlobalPackageVersion
 {
     private readonly DirectoryInfo _directoryInfo;
 
-    public GlobalPackage NugetPackage { get; }
+    public GlobalPackageBundle NugetPackage { get; }
 
     public string Version { get; }
 
@@ -14,7 +14,7 @@ internal class GlobalPackageVersion
 
     public DateTime LastUsedAt { get; }
 
-    public GlobalPackageVersion(GlobalPackage nugetPackage, string version)
+    public GlobalPackageVersion(GlobalPackageBundle nugetPackage, string version)
     {
         this.NugetPackage = nugetPackage;
         this.Version = version;

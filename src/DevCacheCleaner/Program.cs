@@ -1,5 +1,5 @@
 ﻿using CommandLine;
-using DevCacheCleaner.Nuget;
+using DevCacheCleaner.Nuget.GlobalPackage;
 using DevCacheCleaner.Shared;
 
 namespace DevCacheCleaner;

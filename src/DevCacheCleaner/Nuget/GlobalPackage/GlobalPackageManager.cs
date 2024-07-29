@@ -1,6 +1,6 @@
 ﻿using DevCacheCleaner.Shared;
 
-namespace DevCacheCleaner.Nuget;
+namespace DevCacheCleaner.Nuget.GlobalPackage;
 
 internal class GlobalPackageManager
 {
@@ -20,10 +20,10 @@ internal class GlobalPackageManager
     {
         var preVolume = FileSystemHelper.GetDirectorySize(this.GlobalCachePath);
 
-        List<GlobalPackage> globalPackages = Directory.GetDirectories(this.GlobalCachePath)
+        List<GlobalPackageBundle> globalPackages = Directory.GetDirectories(this.GlobalCachePath)
             .Select(p =>
             {
-                var package = new GlobalPackage(p);
+                var package = new GlobalPackageBundle(p);
                 package.LoadCachedVersions();
                 return package;
             })
@@ -38,6 +38,6 @@ internal class GlobalPackageManager
 
         var postVolume = FileSystemHelper.GetDirectorySize(this.GlobalCachePath);
 
-        return (preVolume - postVolume);
+        return preVolume - postVolume;
     }
 }
