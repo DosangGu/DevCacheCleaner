@@ -20,6 +20,14 @@ public class NugetCacheManager
         }
     }
 
+    public void LoadCachePathInfo()
+    {
+        if (_cachePathInfo == null)
+        {
+            this._cachePathInfo = CLIHelper.GetCachePathInfo();
+        }
+    }
+
     public long CleanCache(int thresholdDays)
     {
         if (this._cachePathInfo == null)
