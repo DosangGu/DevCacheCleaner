@@ -1,5 +1,6 @@
 ﻿using CommandLine;
 using DevCacheCleaner.Nuget;
+using DevCacheCleaner.Xamarin;
 
 namespace DevCacheCleaner;
 
@@ -13,8 +14,11 @@ internal class Program
         nugetCacheManager.LoadCachePathInfo();
         var reclaimedSpacesOfNuget = nugetCacheManager.CleanCache(programOptions.ThresholdDays);
 
-        float reclaimedSpacesOfNugetInMB = reclaimedSpacesOfNuget / 1024 / 1024;
-        Console.WriteLine($"Reclaimed spaces: {reclaimedSpacesOfNugetInMB:F2} MB");
+        var xamarinCacheManager = new XamarinCacheManager(programOptions.IncludeXamarin);
+        var reclaimedSpacesOfXamarin = xamarinCacheManager.CleanCache();
+
+        float reclaimedSpacesInMB = (reclaimedSpacesOfNuget + reclaimedSpacesOfXamarin) / 1024 / 1024;
+        Console.WriteLine($"Reclaimed spaces: {reclaimedSpacesInMB:F2} MB");
     }
 }
 
@@ -22,4 +26,7 @@ internal class Options
 {
     [Option('d', "days", Required = false, Default = 30, HelpText = "Threshold days to delete old accessed caches")]
     public int ThresholdDays { get; set; }
+
+    [Option("include-xamarin", Required = false, Default = false, HelpText = "Include Xamarin cache path")]
+    public bool IncludeXamarin { get; set; }
 }

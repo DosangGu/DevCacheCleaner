@@ -19,3 +19,4 @@ devcachecleaner -d [threshold days to delete nuget caches]
 ### Options
 
 - `-d` or `--days` (optional): Threshold days for last accessed to nuget cached folders. Nuget cache folders which have accessed older than this threshold will be deleted. Default is 30 days.
+- `--include-xamarin` (optional): Include Xamarin cache folders. Default is false.

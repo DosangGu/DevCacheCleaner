@@ -22,6 +22,9 @@ internal static class FileSystemHelper
 
     public static long GetDirectorySize(string directoryPath)
     {
+        if (Directory.Exists(directoryPath) == false)
+            return 0;
+
         long size = 0;
 
         DirectoryInfo directoryInfo = new DirectoryInfo(directoryPath);
