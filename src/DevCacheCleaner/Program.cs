@@ -17,8 +17,28 @@ internal class Program
         var xamarinCacheManager = new XamarinCacheManager(programOptions.IncludeXamarin);
         var reclaimedSpacesOfXamarin = xamarinCacheManager.CleanCache();
 
-        float reclaimedSpacesInMB = (reclaimedSpacesOfNuget + reclaimedSpacesOfXamarin) / 1024 / 1024;
-        Console.WriteLine($"Reclaimed spaces: {reclaimedSpacesInMB:F2} MB");
+        var normalizedReclaimedSpaces = GetNormalizedStringOfSize(reclaimedSpacesOfNuget + reclaimedSpacesOfXamarin);
+        Console.WriteLine($"Reclaimed spaces: {normalizedReclaimedSpaces}");
+    }
+
+    private static string GetNormalizedStringOfSize(long bytes)
+    {
+        if (bytes < 1024)
+        {
+            return $"{bytes:F2} bytes";
+        }
+        else if (bytes < 1024 * 1024)
+        {
+            return $"{bytes / 1024:F2} KB";
+        }
+        else if (bytes < 1024 * 1024 * 1024)
+        {
+            return $"{bytes / 1024 / 1024:F2} MB";
+        }
+        else
+        {
+            return $"{bytes / 1024 / 1024 / 1024:F2} GB";
+        }
     }
 }
 
