@@ -12,7 +12,7 @@ internal class GlobalPackageBundle
     public GlobalPackageBundle(string path, string? name = default)
     {
         this.DirectoryPath = path;
-        this.CachedVersions = [];
+        this.CachedVersions = new List<GlobalPackageVersion>();
     }
 
     public void LoadCachedVersions()

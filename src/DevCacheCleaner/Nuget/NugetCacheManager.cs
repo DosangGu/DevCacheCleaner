@@ -12,14 +12,6 @@ public class NugetCacheManager
     {
     }
 
-    public async Task LoadCachePathInfoAsync(CancellationToken cancel = default)
-    {
-        if (_cachePathInfo == null)
-        {
-            this._cachePathInfo = await CLIHelper.GetCachePathInfoAsync(cancel);
-        }
-    }
-
     public void LoadCachePathInfo()
     {
         if (_cachePathInfo == null)
