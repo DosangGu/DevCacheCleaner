@@ -8,7 +8,7 @@
     <Nullable>enable</Nullable>
 
     <PackageId>DevCacheCleaner</PackageId>
-    <Version>0.2.1</Version>
+    <Version>0.2.2</Version>
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>DevCacheCleaner</ToolCommandName>
     <PackageReadmeFile>README.md</PackageReadmeFile>
